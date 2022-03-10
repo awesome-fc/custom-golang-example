@@ -1,0 +1,26 @@
+edition: 1.0.0
+name: hello-world-app
+access: "default"
+
+vars:
+  region: cn-hangzhou
+  service:
+    name: dingtalk-test
+    description: 'dingtalk custom region'
+
+services:
+  helloworld:
+    component: fc
+    actions:
+      pre-deploy:
+        - run: make build
+          path: ./
+    props:
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: dingtalkCustomGo
+        timeout: 30
+        memorySize: 512
+        runtime: custom
+        codeUri: ./code
